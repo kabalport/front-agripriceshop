@@ -11,6 +11,9 @@ import ProductDetailPage from "../../pages/ProductDetailPage";
 import CommunityPage from "../../pages/CommunityPage";
 import MyPage from "../../pages/MyPage";
 import UserNavbar from "./UserNavbar";
+import LogoutPage from '../../pages/LogoutPage';
+import UserFooter from "./UserFooter";
+
 // import other pages...
 
 const UserLayout: React.FC = () => {
@@ -20,6 +23,7 @@ const UserLayout: React.FC = () => {
         <div>
             {location.pathname !== '/login' && <UserHeader />}
             {location.pathname !== '/login' && <UserNavbar />}
+
             <Routes>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/login" element={<LoginPage />} />
@@ -28,7 +32,10 @@ const UserLayout: React.FC = () => {
                 <Route path="/products/:productId" element={<ProductDetailPage />} />
                 <Route path="/community" element={<CommunityPage />} />
                 <Route path="/my-page" element={<MyPage />} />
+                <Route path="/logout" element={<LogoutPage />} />
+
             </Routes>
+            <UserFooter />
             <Outlet />
         </div>
     );

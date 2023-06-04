@@ -1,40 +1,48 @@
 // src/components/pages/LoginPage.tsx
 
 import React, { useState } from 'react';
+import axios from 'axios';
 import Button from '../common/Button';
-import { useNavigate } from 'react-router-dom';  // 변경된 줄
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [loginId, setLoginId] = useState("");
+    const [pw, setPw] = useState("");
+    const navigate = useNavigate();
 
-    const navigate = useNavigate();  // 변경된 줄
-
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        // Perform login
-    };
 
-    const handleGoBack = () => {  // 이전 페이지로 이동하는 함수
-        navigate(-1);
-    }
+        try {
+            const response = await axios.post("http://localhost:8080/api/login", { loginId, pw });
+            console.log(response.data);
+
+            // Save the username to localStorage
+            localStorage.setItem("userName", response.data.userName);
+
+            // Redirect to the home page
+            navigate("/");
+        } catch (error) {
+            console.error(error);
+            // Handle the error appropriately...
+        }
+    };
 
     return (
         <div>
             <h1>Login Page</h1>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Username:
-                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    Login ID:
+                    <input type="text" value={loginId} onChange={(e) => setLoginId(e.target.value)} required />
                 </label>
                 <label>
                     Password:
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <input type="password" value={pw} onChange={(e) => setPw(e.target.value)} required />
                 </label>
                 <Button label="Login" />
-                <Button label="Go Back" onClick={handleGoBack} />  // 변경된 줄
             </form>
-            {/* Other components... */}
+            <Button label="Go Back" onClick={() => navigate(-1)} />
         </div>
     );
 };
