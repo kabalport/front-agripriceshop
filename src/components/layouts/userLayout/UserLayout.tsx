@@ -21,8 +21,8 @@ const UserLayout: React.FC = () => {
 
     return (
         <div>
-            {location.pathname !== '/login' && <UserHeader />}
-            {location.pathname !== '/login' && <UserNavbar />}
+            {location.pathname !== '/register' && location.pathname !== '/login' && <UserHeader />}
+            {location.pathname !== '/register' && location.pathname !== '/login' && <UserNavbar />}
 
             <Routes>
                 <Route path="/" element={<MainPage />} />
@@ -33,9 +33,8 @@ const UserLayout: React.FC = () => {
                 <Route path="/community" element={<CommunityPage />} />
                 <Route path="/my-page" element={<MyPage />} />
                 <Route path="/logout" element={<LogoutPage />} />
-
             </Routes>
-            <UserFooter />
+            {location.pathname !== '/register' && location.pathname !== '/login' && <UserFooter />}
             <Outlet />
         </div>
     );
