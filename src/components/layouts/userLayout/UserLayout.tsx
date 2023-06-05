@@ -13,6 +13,7 @@ import MyPage from "../../pages/MyPage";
 import UserNavbar from "./UserNavbar";
 import LogoutPage from '../../pages/LogoutPage';
 import UserFooter from "./UserFooter";
+import {CartProvider} from "../../../contexts/CartContext";
 
 // import other pages...
 
@@ -20,6 +21,7 @@ const UserLayout: React.FC = () => {
     const location = useLocation();
 
     return (
+        <CartProvider>
         <div>
             {location.pathname !== '/register' && location.pathname !== '/login' && <UserHeader />}
             {location.pathname !== '/register' && location.pathname !== '/login' && <UserNavbar />}
@@ -29,7 +31,7 @@ const UserLayout: React.FC = () => {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/products" element={<ProductPage />} />
-                <Route path="/products/:productId" element={<ProductDetailPage />} />
+                <Route path="/products/:id" element={<ProductDetailPage />} />
                 <Route path="/community" element={<CommunityPage />} />
                 <Route path="/my-page" element={<MyPage />} />
                 <Route path="/logout" element={<LogoutPage />} />
@@ -37,6 +39,7 @@ const UserLayout: React.FC = () => {
             {location.pathname !== '/register' && location.pathname !== '/login' && <UserFooter />}
             <Outlet />
         </div>
+        </CartProvider>
     );
 };
 
