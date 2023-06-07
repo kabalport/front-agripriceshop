@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { AppBar, Toolbar, Typography, Button, Box, Tab, Tabs } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/system';
 
@@ -32,12 +32,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 const UserHeader: React.FC = () => {
     const classes = useStyles();
+    const location = useLocation();
     const userName = localStorage.getItem('userName');
+
+
+    const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+        window.location.href = newValue;
+    };
+
+     const handleAdminClick = () => {
+         window.location.href = '/admin';
+     };
+
 
     return (
         <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
-            <Toolbar className={classes.toolbar}>
-                <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+            <Toolbar className={classes.toolbar}  style={{paddingLeft:0}}>
+                <Tabs value={location.pathname} onChange={handleChange}>
+                    <Tab label="사용자 화면" value="/" component={RouterLink} to="/" />
+                    {/*<Tab label="관리자 화면" value="/admin" component={RouterLink} to="/admin" />*/}
+                    <Tab label="관리자 화면" onClick={handleAdminClick} />
+
+                </Tabs>
+                <Typography variant="h6" color="inherit"  className={classes.toolbarTitle}>
                 </Typography>
                 {userName ? (
                     <Box display="flex" alignItems="center">

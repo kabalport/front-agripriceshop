@@ -14,6 +14,8 @@ import UserNavbar from "./UserNavbar";
 import LogoutPage from '../../pages/LogoutPage';
 import UserFooter from "./UserFooter";
 import {CartProvider} from "../../../contexts/CartContext";
+import NewPostPage from "../../pages/NewPostPage";
+import PriceSearchPage from "../../pages/PriceSearchPage";
 
 // import other pages...
 
@@ -33,6 +35,8 @@ const UserLayout: React.FC = () => {
                 <Route path="/products" element={<ProductPage />} />
                 <Route path="/products/:id" element={<ProductDetailPage />} />
                 <Route path="/community" element={<CommunityPage />} />
+                <Route path="/community/new-post" element={<NewPostPage />} />  {/* New route */}
+                <Route path="/price-search" element={<PriceSearchPage />} />
                 <Route path="/my-page" element={<MyPage />} />
                 <Route path="/logout" element={<LogoutPage />} />
             </Routes>

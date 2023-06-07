@@ -83,7 +83,7 @@ const UserNavbar: React.FC = () => {
                 <Box sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1, justifyContent: 'center' }}>
                     <Typography
                         component={RouterLink}
-                        to="/products"
+                        to="/price-search"
                         variant="body1"
                         style={{ cursor: "pointer", color: "inherit", textDecoration: "none", marginLeft: "15px", marginRight: "15px", fontWeight:"bold" }}
                     >
@@ -115,12 +115,13 @@ const UserNavbar: React.FC = () => {
                     </Typography>
                 </Box>
 
-
-                <IconButton style={{ padding: 0 }}>
-                    <Box style={{ backgroundColor: '#0080fe', width: '80px', height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <SearchIcon style={{ color: '#FFFFFF', width: '30px', height: '30px' }} />
-                    </Box>
-                </IconButton>
+                <Box>
+                {/*<IconButton style={{ padding: 0 }}>*/}
+                {/*    <Box style={{ backgroundColor: '#0080fe', width: '80px', height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>*/}
+                {/*        <SearchIcon style={{ color: '#FFFFFF', width: '30px', height: '30px' }} />*/}
+                {/*    </Box>*/}
+                {/*</IconButton>*/}
+                </Box>
             </StyledToolbar>
         </StyledAppBar>
     );
