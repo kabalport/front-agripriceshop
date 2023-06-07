@@ -2,20 +2,21 @@
 
 import React from 'react';
 import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
-import MainPage from '../../pages/MainPage';
-import LoginPage from '../../pages/LoginPage';
-import RegisterPage from '../../pages/RegisterPage';
+import MainPage from '../../pages/user/MainPage';
+import LoginPage from '../../pages/user/LoginPage';
+import RegisterPage from '../../pages/user/RegisterPage';
 import UserHeader from "./UserHeader";
-import ProductPage from "../../pages/ProductPage";
-import ProductDetailPage from "../../pages/ProductDetailPage";
-import CommunityPage from "../../pages/CommunityPage";
-import MyPage from "../../pages/MyPage";
+import ProductPage from "../../pages/user/ProductPage";
+import ProductDetailPage from "../../pages/user/ProductDetailPage";
+import CommunityPage from "../../pages/user/CommunityPage";
+import MyPage from "../../pages/user/MyPage";
 import UserNavbar from "./UserNavbar";
-import LogoutPage from '../../pages/LogoutPage';
+import LogoutPage from '../../pages/user/LogoutPage';
 import UserFooter from "./UserFooter";
 import {CartProvider} from "../../../contexts/CartContext";
-import NewPostPage from "../../pages/NewPostPage";
-import PriceSearchPage from "../../pages/PriceSearchPage";
+import NewPostPage from "../../pages/user/NewPostPage";
+import PriceSearchPage from "../../pages/user/PriceSearchPage";
+
 
 // import other pages...
 
@@ -41,6 +42,8 @@ const UserLayout: React.FC = () => {
                 <Route path="/logout" element={<LogoutPage />} />
             </Routes>
             {location.pathname !== '/register' && location.pathname !== '/login' && <UserFooter />}
+
+
             <Outlet />
         </div>
         </CartProvider>

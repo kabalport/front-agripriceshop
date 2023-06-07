@@ -22,9 +22,10 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "center"
     },
     toolbar: {
+        minHeight: '40px',
+        height: '40px',
         flexWrap: 'wrap',
         backgroundColor: "#f5f5f5",
-        maxHeight: '80px'
     },
     toolbarTitle: {
         flexGrow: 1,
@@ -52,13 +53,12 @@ const UserHeader: React.FC = () => {
                     <Tab label="사용자 화면" value="/" component={RouterLink} to="/" />
                     {/*<Tab label="관리자 화면" value="/admin" component={RouterLink} to="/admin" />*/}
                     <Tab label="관리자 화면" onClick={handleAdminClick} />
-
                 </Tabs>
                 <Typography variant="h6" color="inherit"  className={classes.toolbarTitle}>
                 </Typography>
                 {userName ? (
                     <Box display="flex" alignItems="center">
-                        <Typography>{userName}님</Typography>
+                        <Typography style={{minHeight: '40px'}}>{userName}님</Typography>
                         <Box mx={1}>
                         <Typography component={StyledLink} to="/logout">
                             로그아웃
@@ -66,7 +66,7 @@ const UserHeader: React.FC = () => {
                     </Box>
                     </Box>
                 ) : (
-                    <Box display="flex" alignItems="center">
+                    <Box display="flex" alignItems="center"  style={{minHeight: '40px'}}>
                         <Typography component={StyledLink} to="/login">
                             로그인
                         </Typography>

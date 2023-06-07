@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Box, Card, CardContent, CardMedia, Typography, CircularProgress, Button as MuiButton } from '@mui/material';
 import { styled } from "@mui/system";
-import { useCart } from '../../contexts/CartContext';
+import { useCart } from '../../../contexts/CartContext';
 
 
 interface Product {

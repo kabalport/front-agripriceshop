@@ -1,52 +1,118 @@
-// src/components/layouts/AdminLayout.tsx
-
 import React from 'react';
-import { Outlet, Route, Routes } from 'react-router-dom';
-import { Box, Container, CssBaseline, Toolbar } from '@mui/material';
-import AdminHeader from './AdminHeader';
-import AdminDashboardPage from '../../pages/AdminDashboardPage';
-import AdminLoginPage from '../../pages/AdminLoginPage';
-import AdminRegisterPage from '../../pages/AdminRegisterPage';
-import AdminSidebar from '../adminLayout/AdminSideBar';
-import UserHeader from "../userLayout/UserHeader";
-import UserNavbar from "../userLayout/UserNavbar";
-import MainPage from "../../pages/MainPage";
-import LoginPage from "../../pages/LoginPage";
-import RegisterPage from "../../pages/RegisterPage";
-import ProductPage from "../../pages/ProductPage";
-import ProductDetailPage from "../../pages/ProductDetailPage";
-import CommunityPage from "../../pages/CommunityPage";
-import NewPostPage from "../../pages/NewPostPage";
-import PriceSearchPage from "../../pages/PriceSearchPage";
-import MyPage from "../../pages/MyPage";
-import LogoutPage from "../../pages/LogoutPage";
-import UserFooter from "../userLayout/UserFooter";
-import {CartProvider} from "../../../contexts/CartContext";
+import { styled } from '@mui/system';
+import {Drawer, Toolbar, Box, List, ListItem, ListItemIcon, ListItemText, Typography} from '@mui/material';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import PeopleIcon from '@mui/icons-material/People';
+import StoreIcon from '@mui/icons-material/Store';
+import MessageIcon from '@mui/icons-material/Message';
+import AdminIcon from '@mui/icons-material/AdminPanelSettings';
+import HomeIcon from '@mui/icons-material/Home';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Hidden } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-const AdminLayout: React.FC = () => {
+// Import your components here
+import AdminDashboardPage from '../../pages/admin/AdminDashboardPage';
+import UserManage from '../../pages/admin/UserManage';
+import AdminManage from '../../pages/admin/AdminManage';
+import ShopManage from '../../pages/admin/ShopManage';
+import BoardManage from '../../pages/admin/BoardManage';
+import AdminHeader from "./AdminHeader";
+import AdminLoginPage from "../../pages/admin/AdminLoginPage";
+import UserDetail from "../../pages/admin/UserDetail";
+
+const drawerWidth = 240;
+
+const DrawerWrapper = styled(Drawer)(({ theme }) => ({
+    [theme.breakpoints.up('sm')]: {
+        width: drawerWidth,
+        flexShrink: 0,
+    },
+}));
+
+const Content = styled('main')(({ theme }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+}));
+
+
+
+
+function AdminLayout() {
+
     return (
-        <CartProvider>
-            <div>
-                {location.pathname !== '/register' && location.pathname !== '/login' && <UserHeader />}
-                {location.pathname !== '/register' && location.pathname !== '/login' && <UserNavbar />}
-                <AdminSidebar/>
+        <Box sx={{ display: 'flex' }}>
+            {/*<AdminHeader />*/}
+            <Hidden smDown>
+            <DrawerWrapper
+                variant="permanent"
+                sx={{
+                    '& .MuiDrawer-paper': {
+                        width: drawerWidth,
+                        boxSizing: 'border-box',
+                    },
+                }}
+            >
+                <Toolbar><Typography>농산커</Typography></Toolbar>
+
+                {/* your drawer content here */}
+                <List>
+                    <ListItem button component={Link} to="/admin/">
+                        <ListItemIcon>
+                            <DashboardIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="대시보드" />
+                    </ListItem>
+                    <ListItem button component={Link} to="/admin/user-manage">
+                        <ListItemIcon>
+                            <PeopleIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="사용자 관리" />
+                    </ListItem>
+                    <ListItem button component={Link} to="/admin/admin-manage">
+                        <ListItemIcon>
+                            <AdminIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="관리자 관리" />
+                    </ListItem>
+                    <ListItem button component={Link} to="/admin/products">
+                        <ListItemIcon>
+                            <StoreIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="상품 관리" />
+                    </ListItem>
+                    <ListItem button component={Link} to="/admin/boards">
+                        <ListItemIcon>
+                            <MessageIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="게시판 관리" />
+                    </ListItem>
+                    <ListItem button component={Link} to="/">
+                        <ListItemIcon>
+                            <HomeIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="사용자 홈" />
+                    </ListItem>
+                </List>
+            </DrawerWrapper>
+            </Hidden>
+            <Content sx={{margin: 0, padding: 0}}>
+                <AdminHeader/>
+
+                {/* your main content here */}
                 <Routes>
-                    <Route path="/" element={<MainPage />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/register" element={<RegisterPage />} />
-                    <Route path="/products" element={<ProductPage />} />
-                    <Route path="/products/:id" element={<ProductDetailPage />} />
-                    <Route path="/community" element={<CommunityPage />} />
-                    <Route path="/community/new-post" element={<NewPostPage />} />  {/* New route */}
-                    <Route path="/price-search" element={<PriceSearchPage />} />
-                    <Route path="/my-page" element={<MyPage />} />
-                    <Route path="/logout" element={<LogoutPage />} />
+                    <Route path="/" element={<AdminDashboardPage />} />
+                    <Route path="/login" element={<AdminLoginPage />} />
+                    <Route path="/user-manage" element={<UserManage />} />
+                    <Route path="/admin-manage" element={<AdminManage />} />
+                    <Route path="/products" element={<ShopManage />} />
+                    <Route path="/boards" element={<BoardManage />} />
+                    <Route path="/user-manage/:id" element={<UserDetail />} />
                 </Routes>
-                {location.pathname !== '/register' && location.pathname !== '/login' && <UserFooter />}
-                <Outlet />
-            </div>
-        </CartProvider>
+            </Content>
+        </Box>
     );
-};
+}
 
 export default AdminLayout;
