@@ -36,11 +36,6 @@ const UserHeader: React.FC = () => {
     const location = useLocation();
     const userName = localStorage.getItem('userName');
 
-
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
-        window.location.href = newValue;
-    };
-
      const handleAdminClick = () => {
          window.location.href = '/admin';
      };
@@ -49,10 +44,8 @@ const UserHeader: React.FC = () => {
     return (
         <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
             <Toolbar className={classes.toolbar}  style={{paddingLeft:0}}>
-                <Tabs value={location.pathname} onChange={handleChange}>
-                    <Tab label="사용자 화면" value="/" component={RouterLink} to="/" />
-                    {/*<Tab label="관리자 화면" value="/admin" component={RouterLink} to="/admin" />*/}
-                    <Tab label="관리자 화면" onClick={handleAdminClick} />
+                <Tabs value={location.pathname}>
+                    <Tab label="관리자 화면으로 이동" onClick={handleAdminClick} />
                 </Tabs>
                 <Typography variant="h6" color="inherit"  className={classes.toolbarTitle}>
                 </Typography>

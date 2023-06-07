@@ -116,11 +116,11 @@ const UserNavbar: React.FC = () => {
                 </Box>
 
                 <Box>
-                {/*<IconButton style={{ padding: 0 }}>*/}
-                {/*    <Box style={{ backgroundColor: '#0080fe', width: '80px', height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>*/}
-                {/*        <SearchIcon style={{ color: '#FFFFFF', width: '30px', height: '30px' }} />*/}
-                {/*    </Box>*/}
-                {/*</IconButton>*/}
+                <IconButton style={{ padding: 0 }}>
+                    <Box style={{ backgroundColor: '#0080fe', width: '80px', height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <SearchIcon style={{ color: '#FFFFFF', width: '30px', height: '30px' }} />
+                    </Box>
+                </IconButton>
                 </Box>
             </StyledToolbar>
         </StyledAppBar>

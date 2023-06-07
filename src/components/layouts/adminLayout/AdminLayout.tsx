@@ -21,6 +21,9 @@ import BoardManage from '../../pages/admin/BoardManage';
 import AdminHeader from "./AdminHeader";
 import AdminLoginPage from "../../pages/admin/AdminLoginPage";
 import UserDetail from "../../pages/admin/UserDetail";
+import AdminDetail from "../../pages/admin/AdminDetail";
+import AdminRegisterPage from "../../pages/admin/AdminRegisterPage";
+import ProductCreate from "../../pages/admin/ProductCreate";
 
 const drawerWidth = 240;
 
@@ -109,6 +112,9 @@ function AdminLayout() {
                     <Route path="/products" element={<ShopManage />} />
                     <Route path="/boards" element={<BoardManage />} />
                     <Route path="/user-manage/:id" element={<UserDetail />} />
+                    <Route path="/admin-manage/:id" element={<AdminDetail />} />
+                    <Route path="/register" element={<AdminRegisterPage />} />
+                    <Route path="/shop/create" element={<ProductCreate />} />
                 </Routes>
             </Content>
         </Box>
