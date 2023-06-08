@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Container, TextField, Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 interface Admin {
+    id: number;
     loginId: string;
     pw: string;
     userName: string;
@@ -11,11 +13,13 @@ interface Admin {
     tel: string;
     addr: string;
     email: string;
+    role: "USER" | "ADMIN";
 }
 
 const AdminRegisterPage: React.FC = () => {
     const navigate = useNavigate();
     const [admin, setAdmin] = useState<Admin>({
+        id: 0,
         loginId: "",
         pw: "",
         userName: "",
@@ -24,12 +28,21 @@ const AdminRegisterPage: React.FC = () => {
         tel: "",
         addr: "",
         email: "",
+        role: "USER"
     });
 
-    const handleSubmit = () => {
-        // Call API to register a new admin with the form data
-        // If successful, navigate back to admin list
-        navigate('/admin');
+    const handleSubmit = async () => {
+        try {
+            // API 호출하여 새로운 관리자 등록
+            const response = await axios.post("http://localhost:8080/api/auth/signup", admin);
+            const newAdmin = response.data;
+            console.log(admin)
+            // 등록이 성공적으로 이루어지면 관리자 목록 페이지로 이동
+            navigate('/admin');
+        } catch (error) {
+            // 오류 처리
+            console.error(error);
+        }
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,6 +65,19 @@ const AdminRegisterPage: React.FC = () => {
                     <TextField label="Phone Number" name="tel" value={admin.tel} onChange={handleChange} />
                     <TextField label="Address" name="addr" value={admin.addr} onChange={handleChange} />
                     <TextField label="Email" name="email" value={admin.email} onChange={handleChange} />
+                    <TextField
+                        label="Role"
+                        name="role"
+                        select
+                        value={admin.role}
+                        onChange={handleChange}
+                        SelectProps={{
+                            native: true,
+                        }}
+                    >
+                        <option value="USER">User</option>
+                        <option value="ADMIN">Admin</option>
+                    </TextField>
                     <Button variant="contained" color="primary" onClick={handleSubmit}>등록</Button>
                 </Box>
             </form>

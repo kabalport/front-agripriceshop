@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button} from "@mui/material";
+import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
@@ -20,6 +20,7 @@ interface Admin {
 const AdminManage: React.FC = () => {
     const navigate = useNavigate();
     const [admins, setAdmins] = useState<Admin[]>([]);
+    const [error, setError] = useState<string>("");
 
     useEffect(() => {
         axios.get(`/api/members/index`)
@@ -28,6 +29,7 @@ const AdminManage: React.FC = () => {
             })
             .catch((error) => {
                 console.error(`Error fetching data: ${error}`);
+                setError(`Error fetching data: ${error}`);
             });
     }, []);
 
@@ -35,6 +37,7 @@ const AdminManage: React.FC = () => {
         <Container>
             <h1>관리자 관리</h1>
             <Button variant="contained" color="primary" onClick={() => navigate('/admin/register')}>관리자 등록</Button>
+            {error && <p>{error}</p>}
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
