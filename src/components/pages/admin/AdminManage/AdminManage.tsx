@@ -25,13 +25,20 @@ const AdminManage: React.FC = () => {
     useEffect(() => {
         axios.get(`/api/members/index`)
             .then((response) => {
-                setAdmins(response.data);
+                // Ensure response.data is an array
+                if (Array.isArray(response.data)) {
+                    setAdmins(response.data);
+                } else {
+                    console.error(`Unexpected server response: ${JSON.stringify(response.data)}`);
+                    setError(`Unexpected server response.`);
+                }
             })
             .catch((error) => {
                 console.error(`Error fetching data: ${error}`);
                 setError(`Error fetching data: ${error}`);
             });
     }, []);
+
 
     return (
         <Container>
