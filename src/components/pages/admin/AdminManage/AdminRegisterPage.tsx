@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 interface Admin {
-    id: number;
     loginId: string;
     pw: string;
     userName: string;
@@ -19,7 +18,6 @@ interface Admin {
 const AdminRegisterPage: React.FC = () => {
     const navigate = useNavigate();
     const [admin, setAdmin] = useState<Admin>({
-        id: 0,
         loginId: "",
         pw: "",
         userName: "",
