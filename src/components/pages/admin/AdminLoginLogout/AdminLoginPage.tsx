@@ -26,7 +26,7 @@ const AdminLoginPage: React.FC = () => {
             localStorage.setItem("userName", response.data.userName);
 
             // Redirect to the home page
-            navigate("/");
+            navigate(-1);
         } catch (error) {
             console.error(error);
             // Handle the error appropriately...

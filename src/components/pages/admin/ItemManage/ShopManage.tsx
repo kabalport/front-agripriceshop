@@ -11,11 +11,12 @@ import {
     Paper,
     Select,
     MenuItem,
-    TextField
+    TextField, Box
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { SelectChangeEvent } from '@mui/material/Select';
 import axios from "axios";
+import {styled} from "@mui/system";
 
 
 interface Product {
@@ -29,6 +30,40 @@ interface Product {
     viewCount: number;
     orderCount: number;
 }
+
+// Replace this with your actual mock data
+const mockData: Product[] = [
+    {
+        itemId: 1,
+        name: 'Mock Product',
+        desc: 'This is a mock product',
+        price: 999,
+        stockQuantity: 10,
+        category: 'MOCK',
+        loginId: 'mock',
+        viewCount: 0,
+        orderCount: 0
+    }
+    // Add more items as needed
+];
+
+const Header = styled('h1')({
+    color: '#333',
+    textAlign: 'center',
+    marginBottom: '1rem'
+});
+
+const StyledButton = styled(Button)({
+    margin: '1rem 0'
+});
+
+
+const SearchContainer = styled(Box)({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '1rem'
+});
 
 const ShopManage: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
@@ -49,7 +84,7 @@ const ShopManage: React.FC = () => {
                 setProducts(response.data);
             } catch (error) {
                 console.error("Error fetching data: ", error);
-                // You could show an error message to users here
+                setProducts(mockData); // Use mock data in case of failure
             }
         };
 
@@ -66,17 +101,18 @@ const ShopManage: React.FC = () => {
             setProducts(response.data);
         } catch (error) {
             console.error("Error fetching data: ", error);
-            // You could show an error message to users here
+            setProducts(mockData); // Use mock data in case of failure
         }
     };
 
-
     return (
-        <Container>
-            <h1>상품 관리</h1>
-            <Link to="/admin/shop/create">
-                <Button variant="contained" color="primary">상품 추가</Button>
-            </Link>
+<Container>
+
+        <Header>상품 관리</Header>
+        <Link to="/admin/shop/create">
+            <StyledButton variant="contained" color="primary">상품 추가</StyledButton>
+        </Link>
+        <SearchContainer>
             <Select value={category} onChange={handleCategoryChange}>
                 <MenuItem value={"ALL"}>All</MenuItem>
                 <MenuItem value={"VEGETABLE"}>Vegetable</MenuItem>
@@ -85,7 +121,7 @@ const ShopManage: React.FC = () => {
             </Select>
             <TextField value={searchName} onChange={(e) => setSearchName(e.target.value)} placeholder="Search by Name"/>
             <Button variant="contained" color="primary" onClick={handleSearch}>Search</Button>
-
+        </SearchContainer>
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>

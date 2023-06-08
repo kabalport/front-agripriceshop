@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button} from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 interface Admin {
     id: number;
@@ -18,24 +19,17 @@ interface Admin {
 
 const AdminManage: React.FC = () => {
     const navigate = useNavigate();
+    const [admins, setAdmins] = useState<Admin[]>([]);
 
-    // Admin data (this should come from your backend)
-    const admins: Admin[] = [
-        {
-            id: 1,
-            loginId: "logintest1",
-            pw: "1234",
-            userName: "join1",
-            birthdate: "2023-05-27",
-            gender: "남",
-            tel: "010-1234-1234",
-            addr: "전북 남원시 가방뜰길",
-            email: "test@gmail.com",
-            orders: [],
-            boards: []
-        },
-        // add more admins as needed
-    ];
+    useEffect(() => {
+        axios.get(`/api/members/index`)
+            .then((response) => {
+                setAdmins(response.data);
+            })
+            .catch((error) => {
+                console.error(`Error fetching data: ${error}`);
+            });
+    }, []);
 
     return (
         <Container>

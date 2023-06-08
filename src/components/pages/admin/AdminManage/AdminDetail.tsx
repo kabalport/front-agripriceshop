@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import {Container, Typography, Paper, TextField, Button} from "@mui/material";
+import React, { useState, useEffect } from 'react';
+import {Container, Typography, Paper, TextField, Button, Dialog, DialogTitle, DialogActions} from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 interface Admin {
     id: number;
@@ -20,8 +21,7 @@ const AdminDetail: React.FC = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    // Replace this with API call to get the admin detail based on the id
-    const adminData: Admin = {
+    const [admin, setAdmin] = useState<Admin>({
         id: 1,
         loginId: "logintest1",
         pw: "4321",
@@ -33,25 +33,61 @@ const AdminDetail: React.FC = () => {
         email: "test2@gmail.com",
         orders: [],
         boards: []
-    };
-
-    const [admin, setAdmin] = useState<Admin>(adminData);
+    });
+    const [loading, setLoading] = useState<boolean>(true);
     const [editing, setEditing] = useState<boolean>(false);
+    const [errorModalOpen, setErrorModalOpen] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>('');
+
+    useEffect(() => {
+        axios.get(`/api/members/${id}`)
+            .then((response) => {
+                setAdmin(response.data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                setErrorMessage(`Error fetching data: ${error}`);
+                setErrorModalOpen(true);
+                setLoading(false);
+            });
+    }, [id]);
 
     const handleEdit = () => {
         setEditing(true);
     };
 
     const handleSave = () => {
-        // Call API to update admin details here
-        setEditing(false);
+        axios.put(`/api/members/${id}`, {
+            ...admin
+        })
+            .then((response) => {
+                setAdmin(response.data);
+                setEditing(false);
+            })
+            .catch((error) => {
+                setErrorMessage(`Error updating data: ${error}`);
+                setErrorModalOpen(true);
+            });
     };
 
     const handleDelete = () => {
-        // Call API to delete admin here
-        // If successful, navigate back to admin list
-        navigate('/admin');
+        axios.delete(`/api/members/${id}`)
+            .then(() => {
+                navigate('/admin');
+            })
+            .catch((error) => {
+                setErrorMessage(`Error deleting data: ${error}`);
+                setErrorModalOpen(true);
+            });
     };
+
+    const handleCloseErrorModal = () => {
+        setErrorModalOpen(false);
+    };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <Container>
@@ -75,6 +111,17 @@ const AdminDetail: React.FC = () => {
                     </>
                 )}
             </Paper>
+
+            <Dialog
+                open={errorModalOpen}
+                onClose={handleCloseErrorModal}
+            >
+                <DialogTitle>Error</DialogTitle>
+                <div>{errorMessage}</div>
+                <DialogActions>
+                    <Button onClick={handleCloseErrorModal}>Close</Button>
+                </DialogActions>
+            </Dialog>
         </Container>
     );
 };

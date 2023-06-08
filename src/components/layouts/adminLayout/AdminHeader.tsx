@@ -1,11 +1,24 @@
 import React from 'react';
-import {AppBar, Toolbar, Typography, Button, IconButton, Badge, Tab, Tabs, Menu, MenuItem, Hidden} from '@mui/material';
+import {
+    AppBar,
+    Toolbar,
+    Typography,
+    Button,
+    IconButton,
+    Badge,
+    Tab,
+    Tabs,
+    Menu,
+    MenuItem,
+    Hidden,
+    Box
+} from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/system';
-
+import { useNavigate } from 'react-router-dom';
 
 const StyledLink = styled(RouterLink)({
     textDecoration: 'none',
@@ -104,7 +117,25 @@ const AdminHeader: React.FC = () => {
 
 
                 <Button color="inherit" href="/admin" sx={{flexGrow: 1}}>농산커</Button>
-                <Button color="inherit" href="/admin/login" sx={{flexGrow: 0}}>로그인</Button>
+
+
+                {userName ? (
+                    <Box display="flex" alignItems="center">
+                        <Typography style={{minHeight: '40px'}}>{userName}님</Typography>
+                        <Box mx={1}>
+                            <Typography component={StyledLink} to="/admin/logout">
+                                로그아웃
+                            </Typography>
+                        </Box>
+                    </Box>
+                ) : (
+                    <Box display="flex" alignItems="center"  style={{minHeight: '40px'}}>
+                        <Button color="inherit" href="/admin/login" sx={{flexGrow: 0}}>로그인</Button>
+                    </Box>
+                )}
+
+
+
                 {/*<IconButton color="inherit"  sx={{flexGrow: 0}}>*/}
                 {/*    <Badge badgeContent={4} color="secondary">*/}
                 {/*        <NotificationsIcon />*/}

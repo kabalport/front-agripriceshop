@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import {Container, TextField, Button} from "@mui/material";
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import ErrorModal from "../../../common/ErrorModal";
 
 const ProductCreate: React.FC = () => {
     const navigate = useNavigate();
@@ -15,6 +17,9 @@ const ProductCreate: React.FC = () => {
         orderCount: 0
     });
 
+    // State to handle error
+    const [error, setError] = useState<string | null>(null);
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setProduct({
             ...product,
@@ -25,17 +30,24 @@ const ProductCreate: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        // Call the API to create the product
-        // Replace this with actual API call
-        const createdProduct = {
-            ...product,
-            itemId: Math.floor(Math.random() * 100) + 1 // Just for the mock
-        };
+        try {
+            // Call the API to create the product
+            const response = await axios.post('/api/items', product);
 
-        console.log(createdProduct);
+            // Log the response data (the newly created product)
+            console.log(response.data);
 
-        // If the product is successfully created, navigate back to the product list
-        navigate('/shop/manage');
+            // If the product is successfully created, navigate back to the product list
+            navigate('/shop/manage');
+        } catch (error) {
+            console.error("Error creating product: ", error);
+            // Set the error state with the error message
+            setError("상품 추가 에러 발생");
+        }
+    };
+
+    const handleModalClose = () => {
+        setError(null);
     };
 
     return (
@@ -50,6 +62,8 @@ const ProductCreate: React.FC = () => {
                 <TextField name="loginId" label="등록자 ID" onChange={handleChange} required />
                 <Button type="submit" variant="contained" color="primary">추가</Button>
             </form>
+            {/* Show the error modal if there is an error */}
+            {error && <ErrorModal open={!!error} title="Error" message={error} handleClose={handleModalClose} />}
         </Container>
     );
 };

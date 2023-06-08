@@ -14,16 +14,17 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 // Import your components here
 import AdminDashboardPage from '../../pages/admin/AdminDashboardPage';
-import UserManage from '../../pages/admin/UserManage';
-import AdminManage from '../../pages/admin/AdminManage';
-import ShopManage from '../../pages/admin/ShopManage';
+import UserManage from '../../pages/admin/UserManage/UserManage';
+import AdminManage from '../../pages/admin/AdminManage/AdminManage';
+import ShopManage from '../../pages/admin/ItemManage/ShopManage';
 import BoardManage from '../../pages/admin/BoardManage';
 import AdminHeader from "./AdminHeader";
-import AdminLoginPage from "../../pages/admin/AdminLoginPage";
-import UserDetail from "../../pages/admin/UserDetail";
-import AdminDetail from "../../pages/admin/AdminDetail";
-import AdminRegisterPage from "../../pages/admin/AdminRegisterPage";
-import ProductCreate from "../../pages/admin/ProductCreate";
+import AdminLoginPage from "../../pages/admin/AdminLoginLogout/AdminLoginPage";
+import UserDetail from "../../pages/admin/UserManage/UserDetail";
+import AdminDetail from "../../pages/admin/AdminManage/AdminDetail";
+import AdminRegisterPage from "../../pages/admin/AdminManage/AdminRegisterPage";
+import ProductCreate from "../../pages/admin/ItemManage/ProductCreate";
+import AdminLogoutPage from "../../pages/admin/AdminLoginLogout/AdminLogoutPage";
 
 const drawerWidth = 240;
 
@@ -107,6 +108,7 @@ function AdminLayout() {
                 <Routes>
                     <Route path="/" element={<AdminDashboardPage />} />
                     <Route path="/login" element={<AdminLoginPage />} />
+                    <Route path="/logout" element={<AdminLogoutPage />} />
                     <Route path="/user-manage" element={<UserManage />} />
                     <Route path="/admin-manage" element={<AdminManage />} />
                     <Route path="/products" element={<ShopManage />} />
