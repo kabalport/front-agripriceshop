@@ -12,6 +12,8 @@ const RegisterPage: React.FC = () => {
     const [tel, setTel] = useState("");
     const [addr, setAddr] = useState("");
     const [email, setEmail] = useState("");
+    const [role, setRole] = useState("");
+
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -28,7 +30,8 @@ const RegisterPage: React.FC = () => {
             gender,
             tel,
             addr,
-            email
+            email,
+            role
         };
 
         // Send a POST request to the server
@@ -162,6 +165,35 @@ const RegisterPage: React.FC = () => {
                                 />
                             </Box>
                         </Grow>
+                        {/*<Grow in={true} style={{ transitionDelay: '350ms' }}>*/}
+                        {/*    <Box mb={2}>*/}
+                        {/*        <TextField*/}
+                        {/*            fullWidth*/}
+                        {/*            label="권한"*/}
+                        {/*            type="role"*/}
+                        {/*            variant="outlined"*/}
+                        {/*            value={role}*/}
+                        {/*            onChange={(e) => setRole(e.target.value)}*/}
+                        {/*            required*/}
+                        {/*        />*/}
+                        {/*    </Box>*/}
+                        {/*</Grow>*/}
+                        <Grow in={true} style={{ transitionDelay: '200ms' }}>
+                            <Box mb={2}>
+                                <FormControl fullWidth>
+                                    <InputLabel>권한</InputLabel>
+                                    <Select
+                                        value={role}
+                                        onChange={(e) => setRole(e.target.value)}
+                                    >
+                                        <MenuItem value="USER">사용자</MenuItem>
+                                        <MenuItem value="ADMIN">관리자</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Box>
+                        </Grow>
+
+
                         <Box mb={2}>
                             <Button variant="contained" color="primary" fullWidth type="submit" disabled={isLoading}>
                                 {isLoading ? <CircularProgress size={24} /> : "회원가입"}
