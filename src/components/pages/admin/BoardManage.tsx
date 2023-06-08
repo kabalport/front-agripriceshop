@@ -1,11 +1,24 @@
 import React from 'react';
-import {Container} from "@mui/material";
+import { Container, Box, Typography, Button } from "@mui/material";
 
 const BoardManage: React.FC = () => {
     return (
         <Container>
-            <h1>게시판 관리</h1>
-            {/* Add your board management content here */}
+            <Box sx={{ py: 4 }}>
+                <Typography variant="h1" sx={{ mb: 4 }}>
+                    게시판 관리
+                </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Box sx={{ flex: '1 0 auto', mr: 2 }}>
+                        {/* Add your board management content here */}
+                    </Box>
+                    <Box sx={{ flexShrink: 0 }}>
+                        <Button variant="contained" color="primary">
+                            추가하기
+                        </Button>
+                    </Box>
+                </Box>
+            </Box>
         </Container>
     );
 };
