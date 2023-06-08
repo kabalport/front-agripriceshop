@@ -32,7 +32,7 @@ const ProductCreate: React.FC = () => {
 
         try {
             // Call the API to create the product
-            const response = await axios.post('/api/items', product);
+            const response = await axios.post('http://localhost:8080/admin/items', product);
 
             // Log the response data (the newly created product)
             console.log(response.data);

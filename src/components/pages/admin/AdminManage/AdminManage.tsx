@@ -52,17 +52,23 @@ const AdminManage: React.FC = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {admins.map((admin: Admin) => (
-                                <TableRow key={admin.id}>
-                                    <TableCell>{admin.id}</TableCell>
-                                    <TableCell>{admin.loginId}</TableCell>
-                                    <TableCell>{admin.userName}</TableCell>
-                                    <TableCell>{admin.email}</TableCell>
-                                    <TableCell>
-                                        <Button variant="contained" color="primary" onClick={() => navigate(`/admin/admin-manage/${admin.id}`)}>Detail</Button>
-                                    </TableCell>
+                            {admins.length > 0 ? (
+                                admins.map((admin: Admin) => (
+                                    <TableRow key={admin.id}>
+                                        <TableCell>{admin.id}</TableCell>
+                                        <TableCell>{admin.loginId}</TableCell>
+                                        <TableCell>{admin.userName}</TableCell>
+                                        <TableCell>{admin.email}</TableCell>
+                                        <TableCell>
+                                            <Button variant="contained" color="primary" onClick={() => navigate(`/admin/admin-manage/${admin.id}`)}>Detail</Button>
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                            ) : (
+                                <TableRow>
+                                    <TableCell colSpan={5}>No admins found</TableCell>
                                 </TableRow>
-                            ))}
+                            )}
                         </TableBody>
                     </Table>
                 </TableContainer>

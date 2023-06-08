@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Modal, Box } from '@mui/material';
+import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, Box, TextField } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 interface User {
     id: number;
@@ -32,15 +33,48 @@ const users: User[] = [
     // Add more users as needed
 ];
 
+const UserDetail: React.FC<{ user: User; onEdit: () => void; onDelete: () => void }> = ({ user, onEdit, onDelete }) => {
+    const navigate = useNavigate();
+
+    const handleRetrieve = () => {
+        console.log("Retrieving user:", user);
+        // Implement retrieve logic here
+    };
+
+    return (
+        <Box sx={{ width: 400, padding: 4, backgroundColor: 'white', margin: 'auto', marginTop: '10%', outline: 'none' }}>
+            <div>
+                <h2>{user.userName}'s Details</h2>
+                <p>ID: {user.id}</p>
+                <p>Login ID: {user.loginId}</p>
+                <p>Name: {user.userName}</p>
+                <p>Email: {user.email}</p>
+                <p>Phone: {user.tel}</p>
+                <p>Address: {user.addr}</p>
+                <p>Gender: {user.gender}</p>
+                <p>Birthdate: {user.birthdate}</p>
+                <button onClick={handleRetrieve}>Retrieve User</button>
+                <button onClick={onEdit}>Edit User</button>
+                <button onClick={onDelete}>Delete User</button>
+            </div>
+        </Box>
+    );
+};
+
 const UserManage: React.FC = () => {
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
+    const [isDetailModalOpen, setIsDetailModalOpen] = useState<boolean>(false);
 
-    const handleOpen = (user: User) => {
+    const navigate = useNavigate();
+
+    const handleRowClick = (user: User) => {
         setSelectedUser(user);
+        setIsDetailModalOpen(true);
     };
 
     const handleClose = () => {
         setSelectedUser(null);
+        setIsDetailModalOpen(false);
     };
 
     return (
@@ -58,12 +92,11 @@ const UserManage: React.FC = () => {
                             <TableCell>Address</TableCell>
                             <TableCell>Gender</TableCell>
                             <TableCell>Birthdate</TableCell>
-                            <TableCell>Details</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {users.map((user) => (
-                            <TableRow key={user.id}>
+                            <TableRow key={user.id} onClick={() => handleRowClick(user)}>
                                 <TableCell>{user.id}</TableCell>
                                 <TableCell>{user.loginId}</TableCell>
                                 <TableCell>{user.userName}</TableCell>
@@ -72,34 +105,11 @@ const UserManage: React.FC = () => {
                                 <TableCell>{user.addr}</TableCell>
                                 <TableCell>{user.gender}</TableCell>
                                 <TableCell>{user.birthdate}</TableCell>
-                                <TableCell>
-                                    <Button variant="outlined" onClick={() => handleOpen(user)}>Details</Button>
-                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Modal
-                open={selectedUser !== null}
-                onClose={handleClose}
-            >
-                <Box sx={{ width: 400, padding: 4, backgroundColor: 'white', margin: 'auto', marginTop: '10%', outline: 'none' }}>
-                    {selectedUser && (
-                        <div>
-                            <h2>{selectedUser.userName}'s Details</h2>
-                            <p>ID: {selectedUser.id}</p>
-                            <p>Login ID: {selectedUser.loginId}</p>
-                            <p>Name: {selectedUser.userName}</p>
-                            <p>Email: {selectedUser.email}</p>
-                            <p>Phone: {selectedUser.tel}</p>
-                            <p>Address: {selectedUser.addr}</p>
-                            <p>Gender: {selectedUser.gender}</p>
-                            <p>Birthdate: {selectedUser.birthdate}</p>
-                        </div>
-                    )}
-                </Box>
-            </Modal>
         </Container>
     );
 };
