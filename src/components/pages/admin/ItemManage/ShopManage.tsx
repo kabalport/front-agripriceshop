@@ -81,7 +81,12 @@ const ShopManage: React.FC = () => {
                     response = await axios.get(`/api/items/category?category=${category}`);
                 }
 
-                setProducts(response.data);
+                if (Array.isArray(response.data)) {
+                    setProducts(response.data);
+                } else {
+                    console.error(`Unexpected server response: ${JSON.stringify(response.data)}`);
+                    setProducts(mockData);
+                }
             } catch (error) {
                 console.error("Error fetching data: ", error);
                 setProducts(mockData); // Use mock data in case of failure
@@ -91,19 +96,27 @@ const ShopManage: React.FC = () => {
         fetchData();
     }, [category]);
 
-    const handleCategoryChange = (event: SelectChangeEvent) => {
-        setCategory(event.target.value);
-    }
-
     const handleSearch = async () => {
         try {
             const response = await axios.get(`/api/items/findname?name=${searchName}`);
-            setProducts(response.data);
+            if (Array.isArray(response.data)) {
+                setProducts(response.data);
+            } else {
+                console.error(`Unexpected server response: ${JSON.stringify(response.data)}`);
+                setProducts(mockData);
+            }
         } catch (error) {
             console.error("Error fetching data: ", error);
             setProducts(mockData); // Use mock data in case of failure
         }
     };
+
+
+    const handleCategoryChange = (event: SelectChangeEvent) => {
+        setCategory(event.target.value);
+    }
+
+
 
     return (
 <Container>

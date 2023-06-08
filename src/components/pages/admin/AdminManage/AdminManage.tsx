@@ -23,7 +23,7 @@ const AdminManage: React.FC = () => {
     const [error, setError] = useState<string>("");
 
     useEffect(() => {
-        axios.get(`/api/members/index`)
+        axios.get(`http://localhost:8080/api/members/index`)
             .then((response) => {
                 // Ensure response.data is an array
                 if (Array.isArray(response.data)) {

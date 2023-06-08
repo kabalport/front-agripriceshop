@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {Button, Container} from "@mui/material";
-//... your imports
+import axios from "axios";
 
 interface User {
     id: number;
@@ -17,50 +17,54 @@ interface User {
     boards: any[];
 }
 
-const users: User[] = [
-    {
-        id: 1,
-        loginId: "logintest1",
-        pw: "1234",
-        userName: "join1",
-        birthdate: "2023-05-27",
-        gender: "남",
-        tel: "010-1234-1234",
-        addr: "전북 남원시 가방뜰길",
-        email: "test@gmail.com",
-        orders: [],
-        boards: [],
-    },
-    // Add more users as needed
-];
-
 const UserDetail: React.FC = () => {
-    const { id } = useParams();
+    const { id } = useParams<{id: string}>();
     const [user, setUser] = useState<User | null>(null);
+    const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Fetch the user from the API based on the id from the URL
-        // setUser(fetchedUser);
+        const getUserById = async (id: string) => {
+            try {
+                const response = await axios.get(`your-api-endpoint/users/${id}`);
+                setUser(response.data);
+            } catch (error) {
+                console.error("Failed to fetch user", error);
+                setError("데이터를 가져오지 못하였습니다.");
+            }
+        };
+
+        if (id) {
+            getUserById(id);
+        }
     }, [id]);
 
-    const handleDelete = () => {
-        // Here you would make an API call to delete the user
-        // After deleting the user navigate back to the user manage page
-        navigate('/admin/user-manage');
+    const handleDelete = async () => {
+        try {
+            await axios.delete(`your-api-endpoint/users/${id}`);
+            navigate('/admin/user-manage');
+        } catch (error) {
+            console.error("Failed to delete user", error);
+        }
     };
 
-    const handleEdit = () => {
-        // Here you would make an API call to update the user
+    const handleEdit = async (updatedUser: User) => {
+        try {
+            const response = await axios.put(`your-api-endpoint/users/${id}`, updatedUser);
+            setUser(response.data);
+        } catch (error) {
+            console.error("Failed to update user", error);
+        }
     };
 
+    if (error) return <div>{error}</div>;
     if (!user) return <div>Loading...</div>;
 
     return (
         <Container>
             <h1>사용자 상세 정보</h1>
             {/* Show your user details */}
-            <Button variant="outlined" onClick={handleEdit}>Edit</Button>
+            <Button variant="outlined" onClick={() => handleEdit(user)}>Edit</Button>
             <Button variant="outlined" onClick={handleDelete}>Delete</Button>
         </Container>
     );

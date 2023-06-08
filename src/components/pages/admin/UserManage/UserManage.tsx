@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, Box, TextField } from '@mui/material';
+import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, Box, TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 interface User {
@@ -68,8 +68,12 @@ const UserManage: React.FC = () => {
     const navigate = useNavigate();
 
     const handleRowClick = (user: User) => {
-        setSelectedUser(user);
-        setIsDetailModalOpen(true);
+        navigate(`/admin/user/${user.id}`);
+    };
+
+    const handleRegister = () => {
+        console.log("User Registration");
+        // Implement user registration logic here
     };
 
     const handleClose = () => {
@@ -80,6 +84,7 @@ const UserManage: React.FC = () => {
     return (
         <Container>
             <h1>사용자 관리</h1>
+            <Button variant="contained" color="primary" onClick={handleRegister}>등록</Button>
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
