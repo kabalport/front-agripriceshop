@@ -62,7 +62,7 @@ const AdminHeader: React.FC = () => {
 
     const classes = useStyles();
     const location = useLocation();
-    const userName = localStorage.getItem('userName');
+    const userId = localStorage.getItem('userId');
     const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
         window.location.href = newValue;
     };
@@ -119,9 +119,9 @@ const AdminHeader: React.FC = () => {
                 <Button color="inherit" href="/admin" sx={{flexGrow: 1}}>농산커</Button>
 
 
-                {userName ? (
+                {userId ? (
                     <Box display="flex" alignItems="center">
-                        <Typography style={{minHeight: '40px'}}>{userName}님</Typography>
+                        <Typography style={{minHeight: '40px'}}>{userId}님</Typography>
                         <Box mx={1}>
                             <Typography component={StyledLink} to="/admin/logout">
                                 로그아웃

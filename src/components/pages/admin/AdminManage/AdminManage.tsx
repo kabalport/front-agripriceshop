@@ -7,7 +7,7 @@ interface Admin {
     id: number;
     loginId: string;
     pw: string;
-    userName: string;
+    username: string;
     birthdate: string;
     gender: string;
     tel: string;
@@ -23,7 +23,7 @@ const AdminManage: React.FC = () => {
     const [error, setError] = useState<string>("");
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/members/index`)
+        axios.get(`http://localhost:8080/user/members/list`)
             .then((response) => {
                 // Ensure response.data is an array
                 if (Array.isArray(response.data)) {
@@ -64,10 +64,10 @@ const AdminManage: React.FC = () => {
                                     <TableRow key={admin.id}>
                                         <TableCell>{admin.id}</TableCell>
                                         <TableCell>{admin.loginId}</TableCell>
-                                        <TableCell>{admin.userName}</TableCell>
+                                        <TableCell>{admin.username}</TableCell>
                                         <TableCell>{admin.email}</TableCell>
                                         <TableCell>
-                                            <Button variant="contained" color="primary" onClick={() => navigate(`/admin/admin-manage/${admin.id}`)}>Detail</Button>
+                                            <Button variant="contained" color="primary" onClick={() => navigate(`/admin/admin-manage/${admin.loginId}`)}>Detail</Button>
                                         </TableCell>
                                     </TableRow>
                                 ))

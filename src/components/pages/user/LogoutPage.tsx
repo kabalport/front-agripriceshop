@@ -8,8 +8,9 @@ const LogoutPage: React.FC = () => {
 
     useEffect(() => {
         // Remove user data from local storage
-        localStorage.removeItem('userName');
-        localStorage.removeItem('sessionId');
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('userId');
 
         // Redirect to login page
         navigate('/');

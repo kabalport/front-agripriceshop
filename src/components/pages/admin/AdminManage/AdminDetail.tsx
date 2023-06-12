@@ -18,7 +18,7 @@ interface Admin {
 }
 
 const AdminDetail: React.FC = () => {
-    const { id } = useParams();
+    const { loginId } = useParams();
     const navigate = useNavigate();
 
     const [admin, setAdmin] = useState<Admin>({
@@ -40,7 +40,7 @@ const AdminDetail: React.FC = () => {
     const [errorMessage, setErrorMessage] = useState<string>('');
 
     useEffect(() => {
-        axios.get(`/api/members/${id}`)
+        axios.get(`http://localhost:8080/user/members/${loginId}`)
             .then((response) => {
                 setAdmin(response.data);
                 setLoading(false);
@@ -50,14 +50,14 @@ const AdminDetail: React.FC = () => {
                 setErrorModalOpen(true);
                 setLoading(false);
             });
-    }, [id]);
+    }, [loginId]);
 
     const handleEdit = () => {
         setEditing(true);
     };
 
     const handleSave = () => {
-        axios.put(`/api/members/${id}`, {
+        axios.put(`http://localhost:8080/user/members/${loginId}`, {
             ...admin
         })
             .then((response) => {
@@ -71,7 +71,7 @@ const AdminDetail: React.FC = () => {
     };
 
     const handleDelete = () => {
-        axios.delete(`/api/members/${id}`)
+        axios.delete(`/api/members/${loginId}`)
             .then(() => {
                 navigate('/admin');
             })

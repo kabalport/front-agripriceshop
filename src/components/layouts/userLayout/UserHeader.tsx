@@ -3,6 +3,9 @@ import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button, Box, Tab, Tabs } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/system';
+// import jwt, { JwtPayload } from 'jsonwebtoken';
+
+
 
 const StyledLink = styled(RouterLink)({
     textDecoration: 'none',
@@ -34,9 +37,20 @@ const useStyles = makeStyles((theme) => ({
 const UserHeader: React.FC = () => {
     const classes = useStyles();
     const location = useLocation();
-    const userName = localStorage.getItem('userName');
+    const accessToken = localStorage.getItem('accessToken');
+    let userId = localStorage.getItem('userId');
+    const secretkey = `54185747e7e05d14adc60c52ef154cb5a76db1073321b08a587b8532fd3122c62a99ec7440ab9c62d13a9a1`
 
-     const handleAdminClick = () => {
+
+    if (accessToken) {
+
+        // const decodedToken = jwt.verify(accessToken, secretkey) as JwtPayload; // 'your-secret-key'는 실제 사용한 비밀 키로 교체해야 합니다.
+        // username = decodedToken.sx; // 'name' 필드는 토큰에 따라 다를 수 있습니다.
+    }
+
+
+
+    const handleAdminClick = () => {
          window.location.href = '/admin';
      };
 
@@ -49,11 +63,11 @@ const UserHeader: React.FC = () => {
                 </Tabs>
                 <Typography variant="h6" color="inherit"  className={classes.toolbarTitle}>
                 </Typography>
-                {userName ? (
+                {accessToken ? (
                     <Box display="flex" alignItems="center">
-                        <Typography style={{minHeight: '40px'}}>{userName}님</Typography>
-                        <Box mx={1}>
-                        <Typography component={StyledLink} to="/logout">
+                        <Typography style={{minHeight: '40px'}}>{userId}님</Typography>
+                        <Box mx={1}  style={{minHeight: '40px'}}>
+                        <Typography style={{minHeight: '40px'}} component={StyledLink} to="/logout">
                             로그아웃
                         </Typography>
                     </Box>

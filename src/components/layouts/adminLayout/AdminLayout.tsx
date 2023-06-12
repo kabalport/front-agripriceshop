@@ -114,7 +114,7 @@ function AdminLayout() {
                     <Route path="/products" element={<ShopManage />} />
                     <Route path="/boards" element={<BoardManage />} />
                     <Route path="/user/:id" element={<UserDetail />} />
-                    <Route path="/admin-manage/:id" element={<AdminDetail />} />
+                    <Route path="/admin-manage/:loginId" element={<AdminDetail />} />
                     <Route path="/register" element={<AdminRegisterPage />} />
                     <Route path="/shop/create" element={<ProductCreate />} />
                 </Routes>

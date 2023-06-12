@@ -3,6 +3,9 @@ import axios from 'axios';
 import { Button, TextField, Paper, Box, Typography, CircularProgress, Slide, Grow } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+
+
+
 const LoginPage: React.FC = () => {
     const [loginId, setLoginId] = useState("");
     const [pw, setPw] = useState("");
@@ -15,11 +18,30 @@ const LoginPage: React.FC = () => {
         setIsLoading(true);
 
         try {
-            const response = await axios.post("http://localhost:8080/api/login", { loginId, pw });
+            const response = await axios.post("http://localhost:8080/api/auth/login", { loginId, pw });
+
             console.log(response.data);
 
-            // Save the username to localStorage
-            localStorage.setItem("userName", response.data.userName);
+            // Save the accessToken to localStorage
+            localStorage.setItem("accessToken", response.data.accessToken);
+            localStorage.setItem("refreshToken", response.data.refreshToken);
+
+            const decodeToken = (token: string): string | null => {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const decodedData = JSON.parse(window.atob(base64));
+
+                return decodedData?.sub || null;
+            };
+
+// 사용 예시
+            const accessToken = response.data.accessToken;
+            const userId = decodeToken(accessToken);
+            console.log(userId);
+            localStorage.setItem("userId", userId || "");
+
+
+
 
             // Redirect to the home page
             navigate(-1);
