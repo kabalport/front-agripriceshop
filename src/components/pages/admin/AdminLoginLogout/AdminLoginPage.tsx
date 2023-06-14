@@ -19,7 +19,7 @@ const AdminLoginPage: React.FC = () => {
         setIsLoading(true);
 
         try {
-            const response = await axios.post("http://localhost:8080/api/auth/login", { loginId, pw });
+            const response = await axios.post("http://localhost:8080/api/common/auth/login", { loginId, pw });
             console.log(response.data);
 
             // Save the username to localStorage

@@ -121,7 +121,7 @@ const AdminHeader: React.FC = () => {
 
                 {userId ? (
                     <Box display="flex" alignItems="center">
-                        <Typography style={{minHeight: '40px'}}>{userId}님</Typography>
+                        <Typography>{userId}님</Typography>
                         <Box mx={1}>
                             <Typography component={StyledLink} to="/admin/logout">
                                 로그아웃

@@ -35,6 +35,8 @@ const DrawerWrapper = styled(Drawer)(({ theme }) => ({
     },
 }));
 
+import AdminSideBar from './AdminSideBar';
+
 const Content = styled('main')(({ theme }) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
@@ -42,75 +44,22 @@ const Content = styled('main')(({ theme }) => ({
 
 
 
-
 function AdminLayout() {
 
     return (
         <Box sx={{ display: 'flex' }}>
-            {/*<AdminHeader />*/}
-            <Hidden smDown>
-            <DrawerWrapper
-                variant="permanent"
-                sx={{
-                    '& .MuiDrawer-paper': {
-                        width: drawerWidth,
-                        boxSizing: 'border-box',
-                    },
-                }}
-            >
-                <Toolbar><Typography>농산커</Typography></Toolbar>
-
-                {/* your drawer content here */}
-                <List>
-                    <ListItem button component={Link} to="/admin/">
-                        <ListItemIcon>
-                            <DashboardIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="대시보드" />
-                    </ListItem>
-                    <ListItem button component={Link} to="/admin/user-manage">
-                        <ListItemIcon>
-                            <PeopleIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="사용자 관리" />
-                    </ListItem>
-                    <ListItem button component={Link} to="/admin/admin-manage">
-                        <ListItemIcon>
-                            <AdminIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="관리자 관리" />
-                    </ListItem>
-                    <ListItem button component={Link} to="/admin/products">
-                        <ListItemIcon>
-                            <StoreIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="상품 관리" />
-                    </ListItem>
-                    <ListItem button component={Link} to="/admin/boards">
-                        <ListItemIcon>
-                            <MessageIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="게시판 관리" />
-                    </ListItem>
-                    <ListItem button component={Link} to="/">
-                        <ListItemIcon>
-                            <HomeIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="사용자 홈" />
-                    </ListItem>
-                </List>
-            </DrawerWrapper>
-            </Hidden>
+            <AdminSideBar />
             <Content sx={{margin: 0, padding: 0}}>
                 <AdminHeader/>
 
                 {/* your main content here */}
                 <Routes>
-                    <Route path="/" element={<AdminDashboardPage />} />
+                    {/*<Route path="/" element={<AdminDashboardPage />} />*/}
+                    <Route path="/" element={<AdminManage />} />
+                    <Route path="/members" element={<AdminManage />} />
                     <Route path="/login" element={<AdminLoginPage />} />
                     <Route path="/logout" element={<AdminLogoutPage />} />
                     <Route path="/user-manage" element={<UserManage />} />
-                    <Route path="/admin-manage" element={<AdminManage />} />
                     <Route path="/products" element={<ShopManage />} />
                     <Route path="/boards" element={<BoardManage />} />
                     <Route path="/user/:id" element={<UserDetail />} />

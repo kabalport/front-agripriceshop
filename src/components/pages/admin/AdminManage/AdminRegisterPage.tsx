@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, TextField, Button, Box } from "@mui/material";
+import { Container, TextField, Button, Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
@@ -18,21 +18,21 @@ interface Admin {
 const AdminRegisterPage: React.FC = () => {
     const navigate = useNavigate();
     const [admin, setAdmin] = useState<Admin>({
-        loginId: "",
-        pw: "",
-        userName: "",
-        birthdate: "",
-        gender: "",
-        tel: "",
-        addr: "",
-        email: "",
+        loginId: "test3",
+        pw: "1234",
+        userName: "test3",
+        birthdate: new Date().toISOString().slice(0, 10), // 오늘 날짜로 설정
+        gender: "여",
+        tel: "010-1234-1234",
+        addr: "주소",
+        email: "123@naver.com",
         role: "USER"
     });
 
     const handleSubmit = async () => {
         try {
             // API 호출하여 새로운 관리자 등록
-            const response = await axios.post("http://localhost:8080/api/auth/signup", admin);
+            const response = await axios.post("http://localhost:8080/api/common/auth/signup", admin);
             const newAdmin = response.data;
             console.log(admin)
             // 등록이 성공적으로 이루어지면 관리자 목록 페이지로 이동
@@ -50,21 +50,35 @@ const AdminRegisterPage: React.FC = () => {
         });
     };
 
+
     return (
         <Container>
             <h1>관리자 등록</h1>
             <form noValidate autoComplete="off">
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <TextField label="Login ID" name="loginId" value={admin.loginId} onChange={handleChange} />
-                    <TextField label="Password" name="pw" value={admin.pw} onChange={handleChange} type="password"/>
-                    <TextField label="Username" name="userName" value={admin.userName} onChange={handleChange} />
-                    <TextField label="Birthdate" name="birthdate" value={admin.birthdate} onChange={handleChange} type="date"/>
-                    <TextField label="Gender" name="gender" value={admin.gender} onChange={handleChange} />
-                    <TextField label="Phone Number" name="tel" value={admin.tel} onChange={handleChange} />
-                    <TextField label="Address" name="addr" value={admin.addr} onChange={handleChange} />
-                    <TextField label="Email" name="email" value={admin.email} onChange={handleChange} />
+                    <TextField label="아이디" name="loginId" value={admin.loginId} onChange={handleChange} />
+                    <TextField label="비밀번호" name="pw" value={admin.pw} onChange={handleChange} type="password"/>
+                    <TextField label="이름" name="userName" value={admin.userName} onChange={handleChange} />
+                    <TextField label="생년월일" name="birthdate" value={admin.birthdate} onChange={handleChange} type="date" defaultValue={admin.birthdate} />
                     <TextField
-                        label="Role"
+                        label="성별"
+                        name="gender"
+                        select
+                        value={admin.gender}
+                        onChange={handleChange}
+                        SelectProps={{
+                            native: true,
+                        }}
+                    >
+                        <option value=""></option>
+                        <option value="남">남성</option>
+                        <option value="여">여성</option>
+                    </TextField>
+                    <TextField label="휴대폰번호" name="tel" value={admin.tel} onChange={handleChange} />
+                    <TextField label="주소" name="addr" value={admin.addr} onChange={handleChange} />
+                    <TextField label="이메일" name="email" value={admin.email} onChange={handleChange} />
+                    <TextField
+                        label="역할"
                         name="role"
                         select
                         value={admin.role}

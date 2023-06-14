@@ -23,11 +23,11 @@ const AdminManage: React.FC = () => {
     const [error, setError] = useState<string>("");
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/user/members/list`)
+        axios.get(`http://localhost:8080/api/user/members/list`)
             .then((response) => {
-                // Ensure response.data is an array
-                if (Array.isArray(response.data)) {
-                    setAdmins(response.data);
+                // Check if response.data.content is an array
+                if (Array.isArray(response.data.content)) {
+                    setAdmins(response.data.content);
                 } else {
                     console.error(`Unexpected server response: ${JSON.stringify(response.data)}`);
                     setError(`Unexpected server response.`);
@@ -42,8 +42,8 @@ const AdminManage: React.FC = () => {
 
     return (
         <Container>
-            <h1>관리자 관리</h1>
-            <Button variant="contained" color="primary" onClick={() => navigate('/admin/register')}>관리자 등록</Button>
+            <h1>회원 관리</h1>
+            <Button variant="contained" color="primary" onClick={() => navigate('/admin/register')}>회원 등록</Button>
             {error ? (
                 <p>{error}</p>
             ) : (
@@ -52,10 +52,10 @@ const AdminManage: React.FC = () => {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Id</TableCell>
-                                <TableCell>Login ID</TableCell>
-                                <TableCell>User Name</TableCell>
-                                <TableCell>Email</TableCell>
-                                <TableCell>Detail</TableCell>
+                                <TableCell>아이디</TableCell>
+                                <TableCell>이름</TableCell>
+                                <TableCell>이메일</TableCell>
+                                <TableCell>상세</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -67,7 +67,7 @@ const AdminManage: React.FC = () => {
                                         <TableCell>{admin.username}</TableCell>
                                         <TableCell>{admin.email}</TableCell>
                                         <TableCell>
-                                            <Button variant="contained" color="primary" onClick={() => navigate(`/admin/admin-manage/${admin.loginId}`)}>Detail</Button>
+                                            <Button variant="contained" color="primary" onClick={() => navigate(`/admin/admin-manage/${admin.loginId}`)}>상세보기</Button>
                                         </TableCell>
                                     </TableRow>
                                 ))
