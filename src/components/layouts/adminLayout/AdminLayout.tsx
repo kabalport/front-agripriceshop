@@ -17,7 +17,7 @@ import AdminDashboardPage from '../../pages/admin/AdminDashboardPage';
 import UserManage from '../../pages/admin/UserManage/UserManage';
 import AdminManage from '../../pages/admin/AdminManage/AdminManage';
 import ShopManage from '../../pages/admin/ItemManage/ShopManage';
-import BoardManage from '../../pages/admin/BoardManage';
+import BoardManage from '../../pages/admin/BoardManage/BoardManage';
 import AdminHeader from "./AdminHeader";
 import AdminLoginPage from "../../pages/admin/AdminLoginLogout/AdminLoginPage";
 import UserDetail from "../../pages/admin/UserManage/UserDetail";
@@ -36,6 +36,8 @@ const DrawerWrapper = styled(Drawer)(({ theme }) => ({
 }));
 
 import AdminSideBar from './AdminSideBar';
+import NotFound from "../../pages/NotFound";
+import BoardRegister from "../../pages/admin/BoardManage/BoardRegister";
 
 const Content = styled('main')(({ theme }) => ({
     flexGrow: 1,
@@ -62,10 +64,12 @@ function AdminLayout() {
                     <Route path="/user-manage" element={<UserManage />} />
                     <Route path="/products" element={<ShopManage />} />
                     <Route path="/boards" element={<BoardManage />} />
+                    <Route path="/board/register" element={<BoardRegister />} />
                     <Route path="/user/:id" element={<UserDetail />} />
                     <Route path="/admin-manage/:loginId" element={<AdminDetail />} />
                     <Route path="/register" element={<AdminRegisterPage />} />
                     <Route path="/shop/create" element={<ProductCreate />} />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </Content>
         </Box>
