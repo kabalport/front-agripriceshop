@@ -1,11 +1,21 @@
 // src/components/pages/AdminLoginPage.tsx
-
 import React, {useState} from 'react';
 
 import {useNavigate} from "react-router-dom";
 
 import {Box, CircularProgress, Grow, Paper, Slide, TextField, Typography, Button} from "@mui/material";
+
 import axios from "axios";
+
+const instance = axios.create({
+    baseURL: 'http://localhost:8080'
+});
+
+instance.interceptors.request.use(function (config) {
+    const token = localStorage.getItem('accessToken');
+    config.headers.Authorization =  token ? `Bearer ${token}` : '';
+    return config;
+});
 
 const AdminLoginPage: React.FC = () => {
     const [loginId, setLoginId] = useState("");
@@ -19,10 +29,8 @@ const AdminLoginPage: React.FC = () => {
         setIsLoading(true);
 
         try {
-            const response = await axios.post("http://localhost:8080/api/common/auth/login", { loginId, pw });
+            const response = await instance.post("http://localhost:8080/api/common/auth/login", { loginId, pw });
             console.log(response.data);
-
-            // Save the username to localStorage
 
             // Save the accessToken to localStorage
             localStorage.setItem("accessToken", response.data.accessToken);
@@ -36,7 +44,6 @@ const AdminLoginPage: React.FC = () => {
                 return decodedData?.sub || null;
             };
 
-// 사용 예시
             const accessToken = response.data.accessToken;
             const userId = decodeToken(accessToken);
             console.log(userId);
